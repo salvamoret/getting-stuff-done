@@ -3,8 +3,12 @@
 return array(
 
     'gsd' => array(
-        'folder' => '/Users/salva/vhosts/morettor/a14-Getting-Stuff-Done/',
+        'folder' => '/Users/salva/vhosts/morettor/a14-Getting-Stuff-Done/public/',
         'extension' => '.txt',
+        'listOrder' => array(
+            'inbox', 'actions', 'waiting', 'someday', 'calendar',
+        ),
+        'defaultList' => 'actions',
     ),
 
 	/*
@@ -111,6 +115,7 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
+        'GSD\Providers\TodoServiceProvider',
 
 	),
 
@@ -177,6 +182,7 @@ return array(
 		'URL'             => 'Illuminate\Support\Facades\URL',
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
+        'Todo'            => 'GSD\Providers\TodoFacade',
 
 	),
 

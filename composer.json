@@ -6,6 +6,9 @@
 	"require": {
 		"laravel/framework": "4.1.*"
 	},
+	"require-dev": {
+		"mockery/mockery": "dev-master"
+	},
 	"autoload": {
 		"psr-0": {
 			"GSD": "app/src/"
