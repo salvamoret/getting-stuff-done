@@ -26,7 +26,7 @@ interface ListInterface {
 
     /**
      * Return a list atribute
-     * @param string $name The attribute id|isArchived|isDirty|title
+     * @param string $name The attribute id|archived|subtitle|title
      * @return mixed The attribute value
      * @throws InvalidArgumentException If $name is invalid
      */
@@ -34,7 +34,7 @@ interface ListInterface {
 
     /**
      * Set a list attribute
-     * @param string $name The attribute id|isArchived|isDirty|title
+     * @param string $name The attribute id|archived|subtitle|title
      * @param mixed $value The attribute value
      * @return ListInterface For method chaining
      * @throws InvalidArgumentException If $name is invalid

@@ -20,4 +20,80 @@ class TodoListTest extends TestCase
         $obj = App::make('GSD\Entities\ListInterface');
         $this->assertInstanceOf('GSD\Entities\TodoList', $obj);
     }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testGetInvalidNameThrowsException()
+    {
+        $list = App::make('GSD\Entities\TodoList');
+        $list->get('bogus');
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testSetInvalidNameThrowsException()
+    {
+        $list = App::make('GSD\Entities\TodoList');
+        $list->set('bogus', true);
+    }
+
+    public function testGetSetWorks()
+    {
+        $list = App::make('GSD\Entities\TodoList');
+        $result = $list->set('id', 'abc');
+        $this->assertSame($list, $result);
+        $result = $list->get('id');
+        $this->assertEquals($result, 'abc');
+    }
+
+    public function testSaveNotDirtyDoesNothing()
+    {
+        $list = App::make('GSD\Entities\TodoList');
+        // $list->set('id', '123');
+        $result = $list->save();
+    }
+
+    /**
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage Cannot save if id not set
+     */
+    public function testSaveNoIdThrowsException()
+    {
+        $list = App::make('GSD\Entities\TodoList');
+        $list->set('title', 'My title');
+        $list->save();
+    }
+
+    /**
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage Repository could not save
+     */
+    public function testSaveThrowsExceptionIfRepoFails()
+    {
+        App::bind('GSD\Repositories\RepositoryInterface', function()
+        {
+            $mock = Mockery::mock('GSD\Repositories\RepositoryInterface');
+            $mock->shouldReceive('save')->once()->andReturn(false);
+            return $mock;
+        });
+        $list = App::make('GSD\Entities\TodoList');
+        $list->set('id', 'listname');
+        $list->save();
+    }
+
+    public function testSaveWorksAsExpected()
+    {
+        App::bind('GSD\Repositories\RepositoryInterface', function()
+        {
+            $mock = Mockery::mock('GSD\Repositories\RepositoryInterface');
+            $mock->shouldReceive('save')->once()->andReturn(true);
+            return $mock;
+        });
+        $list = App::make('GSD\Entities\TodoList');
+        $list->set('id', 'listname');
+        $result = $list->save();
+        $this->assertSame($list, $result);
+    }
 }
