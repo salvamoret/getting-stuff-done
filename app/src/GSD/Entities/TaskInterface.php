@@ -11,7 +11,7 @@ interface TaskInterface {
     public function isComplete();
 
     /**
-     * What's the description of the task
+     * What's the description of the task?
      * @return string
      */
     public function description();
@@ -74,4 +74,16 @@ interface TaskInterface {
      * @throws InvalidArgumentException If $name is invalid.
      */
     public function get($name);
+
+    /**
+     * Set all tasks attributes from a string.
+     * @param string $info The task info
+     * @return boolean True on success, false otherwise
+     */
+    public function setFromString($info);
+
+    /**
+     * Return the task as a string
+     */
+    public function __toString();
 }

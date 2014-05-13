@@ -6,9 +6,11 @@ interface TaskCollectionInterface {
 
     /**
      * Add a new task to the collecion
-     * @param TaskInterface $task
+     * @param string|TaskInterface $task Either a TaskInterface or a string
+     *                                   we can construct one from.
+     * @throws InvalidArgumentException If $task not string or TaskInterface
      */
-    public function add(TaskInterface $task);
+    public function add($task);
 
     /**
      * Return task based on index

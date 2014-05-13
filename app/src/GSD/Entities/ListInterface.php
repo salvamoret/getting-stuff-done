@@ -56,14 +56,6 @@ interface ListInterface {
     public function archive();
 
     /**
-     * Load the task list by id
-     * @param integer $id The id (name) of the list
-     * @return ListInterface For method chaining
-     * @throws InvalidArgumentException If $id is not found
-     */
-    public function load($id);
-
-    /**
      * Save the task list
      * @return ListInterface For method chaining
      */
@@ -99,6 +91,7 @@ interface ListInterface {
      * @param string $name Attribute name
      * @return mixed The attribute value
      * @throws OutOfBoundsException If $index is outside range
+     * @throws InvalidArgumentException If $name is invalid
      */
     public function taskGet($index, $name);
 
@@ -115,11 +108,14 @@ interface ListInterface {
      * @param mixed $value Attribute value
      * @return ListInterface For method chaining
      * @throws OutOfBoundsException If $index outside range
+     * @throws InvalidArgumentException If $name is invalid
      */
     public function taskSet($index, $name, $value);
 
     /**
      * Remove the specified task
+     * @param integer $index Tasl index #
+     * @return $this For method chaining
      * @throws OutOfBoundsException If $index outside range
      */
     public function taskRemove($index);
