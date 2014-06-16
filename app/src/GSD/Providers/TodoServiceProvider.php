@@ -11,7 +11,7 @@ class TodoServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app['todo'] = $this->app->share( function()
+        $this->app['todo'] = $this->app->share( function ()
         {
             return new TodoManager;
         } );

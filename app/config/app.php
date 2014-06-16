@@ -3,7 +3,7 @@
 return array(
 
     'gsd' => array(
-        'folder' => '/Users/salva/vhosts/morettor/a14-Getting-Stuff-Done/public/',
+        'folder' => __DIR__ . '/../public/',
         'extension' => '.txt',
         'listOrder' => array(
             'inbox', 'actions', 'waiting', 'someday', 'calendar',
@@ -115,6 +115,8 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
+        'DayleRees\ContainerDebug\ServiceProvider',
+        'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
         'GSD\Providers\TodoServiceProvider',
 
 	),

@@ -192,6 +192,6 @@ class Repository implements RepositoryInterface
             $path .= 'archived/';
         }
         $path .= $id . $this->extension;
-        $return $path;
+        return $path;
     }
 }
