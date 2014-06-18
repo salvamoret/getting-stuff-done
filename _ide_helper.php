@@ -7810,12 +7810,12 @@ namespace {
 		 * @param string|array  $view
 		 * @param array  $data
 		 * @param Closure|string  $callback
-		 * @return int
+		 * @return void
 		 * @static 
 		 */
 		 public static function send($view, $data, $callback){
 			//Method inherited from \Illuminate\Mail\Mailer
-			return \Illuminate\Mail\Mailer::send($view, $data, $callback);
+			 \Illuminate\Mail\Mailer::send($view, $data, $callback);
 		 }
 
 		/**
@@ -7903,6 +7903,17 @@ namespace {
 		 public static function pretend($value = true){
 			//Method inherited from \Illuminate\Mail\Mailer
 			 \Illuminate\Mail\Mailer::pretend($value);
+		 }
+
+		/**
+		 * Check if the mailer is pretending to send messages.
+		 *
+		 * @return bool
+		 * @static 
+		 */
+		 public static function isPretending(){
+			//Method inherited from \Illuminate\Mail\Mailer
+			return \Illuminate\Mail\Mailer::isPretending();
 		 }
 
 		/**
