@@ -30,7 +30,7 @@ interface ListInterface {
      * @return mixed The attribute value
      * @throws InvalidArgumentException If $name is invalid
      */
-    public function get($name);
+    public function get( $name );
 
     /**
      * Set a list attribute
@@ -39,10 +39,10 @@ interface ListInterface {
      * @return ListInterface For method chaining
      * @throws InvalidArgumentException If $name is invalid
      */
-    public function set($name, $value);
+    public function set( $name, $value );
 
     /**
-     * Return the title (alias for get('title'))
+     * Return the title ( alias for get( 'title' ) )
      * @return string
      */
     public function title();
@@ -69,13 +69,14 @@ interface ListInterface {
      *                                   can construct one from
      * @return ListInterface For method chaining
      */
-    public function taskAdd($task);
+    public function taskAdd( $task );
 
     /**
      * Return number of tasks
+     * @param string $type Either 'all', 'done', 'todo', or 'next'
      * @return integer
      */
-    public function taskCount();
+    public function taskCount( $type = 'all' );
 
     /**
      * Return a task
@@ -83,7 +84,7 @@ interface ListInterface {
      * @return TaskInterface The task
      * @throws OutOfBoundsException If $index outside range
      */
-    public function task($index);
+    public function task( $index );
 
     /**
      * Return a task attribute
@@ -93,7 +94,7 @@ interface ListInterface {
      * @throws OutOfBoundsException If $index is outside range
      * @throws InvalidArgumentException If $name is invalid
      */
-    public function taskGet($index, $name);
+    public function taskGet( $index, $name );
 
     /**
      * Return all tasks as an array
@@ -110,7 +111,7 @@ interface ListInterface {
      * @throws OutOfBoundsException If $index outside range
      * @throws InvalidArgumentException If $name is invalid
      */
-    public function taskSet($index, $name, $value);
+    public function taskSet( $index, $name, $value );
 
     /**
      * Remove the specified task
@@ -118,5 +119,5 @@ interface ListInterface {
      * @return $this For method chaining
      * @throws OutOfBoundsException If $index outside range
      */
-    public function taskRemove($index);
+    public function taskRemove( $index );
 }
