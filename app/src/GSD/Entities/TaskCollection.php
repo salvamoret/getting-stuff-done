@@ -23,18 +23,18 @@ class TaskCollection implements TaskCollectionInterface
      *                                   we can construct one from.
      * @throws InvalidArgumentException If $task not string or TaskInterface
      */
-    public function add($task)
+    public function add( $task )
     {
-        if ( ! ($task instanceof TaskInterface))
+        if ( ! ( $task instanceof TaskInterface ) )
         {
-            if ( ! is_string($task))
+            if ( ! is_string( $task ) )
             {
-                throw new \InvalidArgumentException('$task must be string or TaskInterface');
+                throw new \InvalidArgumentException( '$task must be string or TaskInterface' );
             }
-            $newTask = \App::make('GSD\Entities\TaskInterface');
-            if ( ! $newTask->setFromString($task))
+            $newTask = \App::make( 'GSD\Entities\TaskInterface' );
+            if ( ! $newTask->setFromString( $task ) )
             {
-                throw new \InvalidArgumentException('Cannot parse task string');
+                throw new \InvalidArgumentException( 'Cannot parse task string' );
             }
             $task = $newTask;
         }
@@ -48,11 +48,11 @@ class TaskCollection implements TaskCollectionInterface
      * @return TaskInterface The Todo Task
      * @throws OutOfBoundsException If $index outside range
      */
-    public function get($index)
+    public function get( $index )
     {
-        if ($index < 0 || $index >= count($this->tasks))
+        if ( $index < 0 || $index >= count( $this->tasks ) )
         {
-            throw new \OutOfBoundsException('$index is outside range');
+            throw new \OutOfBoundsException( '$index is outside range' );
         }
         return $this->tasks[$index];
     }
@@ -71,34 +71,34 @@ class TaskCollection implements TaskCollectionInterface
      * @param integer $index The task to remove
      * @throws OutOfBoundsException If $index outside range
      */
-    public function remove($index)
+    public function remove( $index )
     {
-        if ($index < 0 || $index >= count($this->tasks))
+        if ( $index < 0 || $index >= count( $this->tasks ) )
         {
-            throw new \OutOfBoundsException('$index is outside range');
+            throw new \OutOfBoundsException( '$index is outside range' );
         }
-        unset($this->tasks[$index]);
+        unset( $this->tasks[$index] );
         $this->sortTasks();
     }
 
     /**
      * Sort the tasks where:
-     *  1) Next actions are alphabetically first
-     *  2) Normal tasks are alphabetically next
-     *  3) Completed tasks are sorted by date completed, descending
+     *  1 ) Next actions are alphabetically first
+     *  2 ) Normal tasks are alphabetically next
+     *  3 ) Completed tasks are sorted by date completed, descending
      */
     protected function sortTasks()
     {
         $next = array();
         $normal = array();
         $completed = array();
-        foreach ($this->tasks as $task)
+        foreach ( $this->tasks as $task )
         {
-            if ($task->isComplete())
+            if ( $task->isComplete() )
             {
                 $completed[] = $task;
             }
-            elseif ($task->isNextAction())
+            elseif ( $task->isNextAction() )
             {
                 $next[] = $task;
             }
@@ -107,30 +107,30 @@ class TaskCollection implements TaskCollectionInterface
                 $normal[] = $task;
             }
         }
-        usort($next, 'static::cmpDescription');
-        usort($normal, 'static::cmpDescription');
-        usort($completed, 'static::cmpCompleted');
-        $this->tasks = array_merge($next, $normal, $completed);
+        usort( $next, 'static::cmpDescription' );
+        usort( $normal, 'static::cmpDescription' );
+        usort( $completed, 'static::cmpCompleted' );
+        $this->tasks = array_merge( $next, $normal, $completed );
     }
 
     /**
      * Compare two tasks by description
      */
-    public static function cmpDescription($a, $b)
+    public static function cmpDescription( $a, $b )
     {
-        return strnatcmp($a->description(), $b->description());
+        return strnatcmp( $a->description(), $b->description() );
     }
 
     /**
      * Compare two tasks by completion date
      */
-    public static function cmpCompleted($a, $b)
+    public static function cmpCompleted( $a, $b )
     {
         $stamp1 = $a->dateCompleted()->timestamp;
         $stamp2 = $b->dateCompleted()->timestamp;
-        if ($stamp1 == $stamp2)
+        if ( $stamp1 == $stamp2 )
         {
-            return strnatcmp($a->description(), $b->description());
+            return strnatcmp( $a->description(), $b->description() );
         }
         return $stamp1 - $stamp2;
     }

@@ -84,10 +84,10 @@ class Task implements TaskInterface
      * Set whether task is complete. Automatically updates dateCompleted.
      * @param boolean $complete
      */
-    public function setIsComplete($complete)
+    public function setIsComplete( $complete )
     {
         $this->complete = !! $complete;
-        if ($this->complete)
+        if ( $this->complete )
         {
             $this->whenCompleted = new Carbon;
         }
@@ -101,7 +101,7 @@ class Task implements TaskInterface
      * Set task description
      * @param string $description
      */
-    public function setDescription($description)
+    public function setDescription( $description )
     {
         $this->description = $description;
     }
@@ -112,11 +112,11 @@ class Task implements TaskInterface
      *                                 Carbon date internally
      * @throws InvalidArgumentException If $date is not null or Carbon
      */
-    public function setDateDue($date)
+    public function setDateDue( $date )
     {
-        if ( ! is_null($date) and ! ($date instanceof Carbon))
+        if ( ! is_null( $date ) and ! ( $date instanceof Carbon ) )
         {
-            throw new \InvalidArgumentException('$date is nor null or Carbon');
+            throw new \InvalidArgumentException( '$date is nor null or Carbon' );
         }
         $this->due = $date;
     }
@@ -125,35 +125,35 @@ class Task implements TaskInterface
      * Set whether task is a next action
      * @param boolean $nextAction
      */
-    public function setIsNextAction($nextAction)
+    public function setIsNextAction( $nextAction )
     {
         $this->nextAction = !! $nextAction;
     }
 
     /**
-     * Set a property. (Ends up calling specific setter)
+     * Set a property. ( Ends up calling specific setter )
      * @param string $name isComplete|description|dateDue|isNextAction
      * @param mixed $value The value to set
      * @throws InvalidArgumentException If $name is invalid
      */
-    public function set($name, $value)
+    public function set( $name, $value )
     {
-        switch ($name)
+        switch ( $name )
         {
             case 'isComplete':
-                $this->setIsComplete($value);
+                $this->setIsComplete( $value );
                 break;
             case 'description':
-                $this->setDescription($value);
+                $this->setDescription( $value );
                 break;
             case 'dateDue':
-                $this->setDateDue($value);
+                $this->setDateDue( $value );
                 break;
             case 'isNextAction':
-                $this->setIsNextAction($value);
+                $this->setIsNextAction( $value );
                 break;
             default:
-                throw new \InvalidArgumentException("Invalid attribute $name");
+                throw new \InvalidArgumentException( "Invalid attribute $name" );
         }
     }
 
@@ -163,9 +163,9 @@ class Task implements TaskInterface
      * @return mixed
      * @throws InvalidArgumentException If $name is invalid.
      */
-    public function get($name)
+    public function get( $name )
     {
-        switch ($name)
+        switch ( $name )
         {
             case 'isComplete':
                 return $this->isComplete();
@@ -178,7 +178,7 @@ class Task implements TaskInterface
             case 'dateCompleted':
                 return $this->dateCompleted();
             default:
-                throw new \InvalidArgumentException("Invalid attribute $name");
+                throw new \InvalidArgumentException( "Invalid attribute $name" );
         }
     }
 
@@ -187,56 +187,56 @@ class Task implements TaskInterface
      * @param string $info The task info
      * @return boolean True on success, false otherwise
      */
-    public function setFromString($info)
+    public function setFromString( $info )
     {
         $this->clear();
 
         // Remove dup spaces and split into words
-        $info = preg_replace('/\s\s+/', ' ', $info);
-        $words = explode(' ', trim($info));
-        if (count($words) == 1 && $words[0] == '')
+        $info = preg_replace( '/\s\s+/', ' ', $info );
+        $words = explode( ' ', trim( $info ) );
+        if ( count( $words ) == 1 && $words[0] == '' )
         {
             return false;
         }
 
         // Completed item
-        if ($words[0] == 'x')
+        if ( $words[0] == 'x' )
         {
             $this->complete = true;
-            array_shift($words);
+            array_shift( $words );
             try
             {
-                $this->whenCompleted = new Carbon(array_shift($words));
-            } catch (\Exception $e) {
+                $this->whenCompleted = new Carbon( array_shift( $words ) );
+            } catch ( \Exception $e ) {
                 return false;
             }
         }
 
         // Next action
-        else if ($words[0] == '*')
+        else if ( $words[0] == '*' )
         {
             $this->nextAction = true;
-            array_shift($words);
+            array_shift( $words );
         }
 
         // Normal item
-        else if ($words[0] == '-')
+        else if ( $words[0] == '-' )
         {
-            array_shift($words);
+            array_shift( $words );
         }
 
         // Look for a due date
-        for ($i=0; $i < count($words); $i++)
+        for ( $i=0; $i < count( $words ); $i++ )
         {
-            if (substr($words[$i], 0, 5) == ':due:')
+            if ( substr( $words[$i], 0, 5 ) == ':due:' )
             {
-                $this->due = new Carbon(substr($words[$i], 5));
-                unset($words[$i]);
+                $this->due = new Carbon( substr( $words[$i], 5 ) );
+                unset( $words[$i] );
                 break;
             }
         }
 
-        $this->description = join(' ', $words);
+        $this->description = join( ' ', $words );
         return true;
     }
 
@@ -246,12 +246,12 @@ class Task implements TaskInterface
     public function __toString()
     {
         $build = array();
-        if ($this->complete)
+        if ( $this->complete )
         {
             $build[] = 'x';
-            $build[] = $this->whenCompleted->format('Y-m-d');
+            $build[] = $this->whenCompleted->format( 'Y-m-d' );
         }
-        elseif ($this->nextAction)
+        elseif ( $this->nextAction )
         {
             $build[] = '*';
         }
@@ -260,10 +260,10 @@ class Task implements TaskInterface
             $build[] = '-';
         }
         $build[] = $this->description;
-        if ($this->due)
+        if ( $this->due )
         {
-            $build[] = ':due:' . $this->due->format('Y-m-d');
+            $build[] = ':due:' . $this->due->format( 'Y-m-d' );
         }
-        return join(' ', $build);
+        return join( ' ', $build );
     }
 }

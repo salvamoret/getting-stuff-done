@@ -38,34 +38,34 @@ interface TaskInterface {
      * Set whether task is complete. Automatically updates dateCompleted.
      * @param bool $complete
      */
-    public function setIsComplete($complete);
+    public function setIsComplete( $complete );
 
     /**
      * Set task description
      * @param string $description
      */
-    public function setDescription($description);
+    public function setDescription( $description );
 
     /**
      * Set date due
      * @param null|string|Carbon $date Null to clear, otherwise stores Carbon
      *                                 date internally.
      */
-    public function setDateDue($date);
+    public function setDateDue( $date );
 
     /**
      * Set whether task is a next action
      * @param boll $nextAction
      */
-    public function setIsNextAction($nextAction);
+    public function setIsNextAction( $nextAction );
 
     /**
-     * Set a property. (Ends up calling specific setter)
+     * Set a property. ( Ends up calling specific setter )
      * @param string $name isComplete|description|dateDue|isNextAction
      * @param mixed $value The value to set.
      * @throws InvalidArgumentException If $name is invalid
      */
-    public function set($name, $value);
+    public function set( $name, $value );
 
     /**
      * Get a property.
@@ -73,14 +73,14 @@ interface TaskInterface {
      * @return mixed
      * @throws InvalidArgumentException If $name is invalid.
      */
-    public function get($name);
+    public function get( $name );
 
     /**
      * Set all tasks attributes from a string.
      * @param string $info The task info
      * @return boolean True on success, false otherwise
      */
-    public function setFromString($info);
+    public function setFromString( $info );
 
     /**
      * Return the task as a string

@@ -10,7 +10,7 @@ interface TaskCollectionInterface {
      *                                   we can construct one from.
      * @throws InvalidArgumentException If $task not string or TaskInterface
      */
-    public function add($task);
+    public function add( $task );
 
     /**
      * Return task based on index
@@ -18,7 +18,7 @@ interface TaskCollectionInterface {
      * @return TaskInterface The Todo Task
      * @throws OutOfBoundsException If $index outside range
      */
-    public function get($index);
+    public function get( $index );
 
     /**
      * Return array containing all tasks
@@ -31,5 +31,5 @@ interface TaskCollectionInterface {
      * @param integer $index The task to remove
      * @throws OutOfBoundsException If $index outside range
      */
-    public function remove($index);
+    public function remove( $index );
 }
