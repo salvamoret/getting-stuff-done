@@ -3,12 +3,13 @@
 return array(
 
     'gsd' => array(
-        'folder' => __DIR__ . '/../public/',
-        'extension' => '.txt',
-        'listOrder' => array(
+        'folder'       => app_path() . '/../public/',
+        'extension'    => '.txt',
+        'listOrder'    => array(
             'inbox', 'actions', 'waiting', 'someday', 'calendar',
         ),
-        'defaultList' => 'actions',
+        'defaultList'  => 'actions',
+        'noListPrompt' => true,   // true = prompt for list,  false = use default
     ),
 
 	/*

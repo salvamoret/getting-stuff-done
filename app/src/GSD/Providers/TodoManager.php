@@ -19,16 +19,16 @@ class TodoManager
      * @return ListInterface The newly created list
      * @throws InvalidArgumentException If the list already exists
      */
-    public function makeList($id, $title)
+    public function makeList( $id, $title )
     {
-        $repository = App::make('RepositoryInterface');
-        if ($repository->exists($id))
+        $repository = App::make( 'GSD\Repositories\RepositoryInterface' );
+        if ( $repository->exists( $id ) )
         {
-            throw new \InvalidArgumentException("A list with id=$id already exists");
+            throw new \InvalidArgumentException( "A list with id=$id already exists" );
         }
-        $list = App::make('ListInterface');
-        $list->set('id', $id)
-             ->set('title', $title)
+        $list = App::make( 'GSD\Entities\ListInterface' );
+        $list->set( 'id', $id )
+             ->set( 'title', $title )
              ->save();
         return $list;
     }
@@ -38,10 +38,10 @@ class TodoManager
      * @param boolean $archived Return archived lists?
      * @return array Of list ids
      */
-    public function allLists($archived = false)
+    public function allLists( $archived = false )
     {
-        $repository = App::make('RepositoryInterface');
-        return $repository->getAll($archived);
+        $repository = App::make( 'GSD\Repositories\RepositoryInterface' );
+        return $repository->getAll( $archived );
     }
 
     /**
@@ -51,13 +51,13 @@ class TodoManager
      * @return ListInterface The list
      * @throws RuntimeException If list is not found.
      */
-    public function get($id, $archived = false)
+    public function get( $id, $archived = false )
     {
-        $repository = App::make('RepositoryInterface');
-        if ( ! $repository->exists($id, $archived))
+        $repository = App::make( 'GSD\Repositories\RepositoryInterface' );
+        if ( ! $repository->exists( $id, $archived ) )
         {
-            throw new \RuntimeException("List id=$id not found");
+            throw new \RuntimeException( "List id=$id not found" );
         }
-        return $repository->load($id, $archived);
+        return $repository->load( $id, $archived );
     }
 }

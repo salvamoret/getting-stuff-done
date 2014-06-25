@@ -3,22 +3,27 @@
 
 class TodoListTest extends TestCase
 {
+    public function tearDown()
+    {
+        $this->refreshApplication();
+    }
+
     public function setup()
     {
-        App::bind('GSD\Repositories\RepositoryInterface', function()
+        App::bind( 'GSD\Repositories\RepositoryInterface', function ()
         {
-            return Mockery::mock('GSD\Repositories\RepositoryInterface');
-        });
-        App::bind('GSD\Entities\TaskCollectionInterface', function()
+            return Mockery::mock( 'GSD\Repositories\RepositoryInterface' );
+        } );
+        App::bind( 'GSD\Entities\TaskCollectionInterface', function ()
         {
-            return Mockery::mock('GSD\Entities\TaskCollectionInterface');
-        });
+            return Mockery::mock( 'GSD\Entities\TaskCollectionInterface' );
+        } );
     }
 
     public function testBoundToInterface()
     {
-        $obj = App::make('GSD\Entities\ListInterface');
-        $this->assertInstanceOf('GSD\Entities\TodoList', $obj);
+        $obj = App::make( 'GSD\Entities\ListInterface' );
+        $this->assertInstanceOf( 'GSD\Entities\TodoList', $obj );
     }
 
     /**
@@ -26,8 +31,8 @@ class TodoListTest extends TestCase
      */
     public function testGetInvalidNameThrowsException()
     {
-        $list = App::make('GSD\Entities\TodoList');
-        $list->get('bogus');
+        $list = App::make( 'GSD\Entities\TodoList' );
+        $list->get( 'bogus' );
     }
 
     /**
@@ -35,23 +40,23 @@ class TodoListTest extends TestCase
      */
     public function testSetInvalidNameThrowsException()
     {
-        $list = App::make('GSD\Entities\TodoList');
-        $list->set('bogus', true);
+        $list = App::make( 'GSD\Entities\TodoList' );
+        $list->set( 'bogus', true );
     }
 
     public function testGetSetWorks()
     {
-        $list = App::make('GSD\Entities\TodoList');
-        $result = $list->set('id', 'abc');
-        $this->assertSame($list, $result);
-        $result = $list->get('id');
-        $this->assertEquals($result, 'abc');
+        $list = App::make( 'GSD\Entities\TodoList' );
+        $result = $list->set( 'id', 'abc' );
+        $this->assertSame( $list, $result );
+        $result = $list->get( 'id' );
+        $this->assertEquals( $result, 'abc' );
     }
 
     public function testSaveNotDirtyDoesNothing()
     {
-        $list = App::make('GSD\Entities\TodoList');
-        // $list->set('id', '123');
+        $list = App::make( 'GSD\Entities\TodoList' );
+        // $list->set( 'id', '123' );
         $result = $list->save();
     }
 
@@ -61,8 +66,8 @@ class TodoListTest extends TestCase
      */
     public function testSaveNoIdThrowsException()
     {
-        $list = App::make('GSD\Entities\TodoList');
-        $list->set('title', 'My title');
+        $list = App::make( 'GSD\Entities\TodoList' );
+        $list->set( 'title', 'My title' );
         $list->save();
     }
 
@@ -72,35 +77,35 @@ class TodoListTest extends TestCase
      */
     public function testSaveThrowsExceptionIfRepoFails()
     {
-        App::bind('GSD\Repositories\RepositoryInterface', function()
+        App::bind( 'GSD\Repositories\RepositoryInterface', function ()
         {
-            $mock = Mockery::mock('GSD\Repositories\RepositoryInterface');
-            $mock->shouldReceive('save')->once()->andReturn(false);
+            $mock = Mockery::mock( 'GSD\Repositories\RepositoryInterface' );
+            $mock->shouldReceive( 'save' )->once()->andReturn( false );
             return $mock;
-        });
-        $list = App::make('GSD\Entities\TodoList');
-        $list->set('id', 'listname');
+        } );
+        $list = App::make( 'GSD\Entities\TodoList' );
+        $list->set( 'id', 'listname' );
         $list->save();
     }
 
     public function testSaveWorksAsExpected()
     {
-        App::bind('GSD\Repositories\RepositoryInterface', function()
+        App::bind( 'GSD\Repositories\RepositoryInterface', function ()
         {
-            $mock = Mockery::mock('GSD\Repositories\RepositoryInterface');
-            $mock->shouldReceive('save')->once()->andReturn(true);
+            $mock = Mockery::mock( 'GSD\Repositories\RepositoryInterface' );
+            $mock->shouldReceive( 'save' )->once()->andReturn( true );
             return $mock;
-        });
-        $list = App::make('GSD\Entities\TodoList');
-        $list->set('id', 'listname');
+        } );
+        $list = App::make( 'GSD\Entities\TodoList' );
+        $list->set( 'id', 'listname' );
         $result = $list->save();
-        $this->assertSame($list, $result);
+        $this->assertSame( $list, $result );
     }
 
     public function testArchiveWhenAlreadyAchivedDoesNothing()
     {
-        $list = App::make('GSD\Entities\TodoList');
-        $list->set('archived', true);
+        $list = App::make( 'GSD\Entities\TodoList' );
+        $list->set( 'archived', true );
         $list->archive();
     }
 
@@ -110,7 +115,7 @@ class TodoListTest extends TestCase
      */
     public function testArchiveWithNoIdThrowsException()
     {
-        $list = App::make('GSD\Entities\TodoList');
+        $list = App::make( 'GSD\Entities\TodoList' );
         $list->archive();
     }
 
@@ -120,15 +125,15 @@ class TodoListTest extends TestCase
      */
     public function testArchiveWhenRepoFailsOnDelete()
     {
-        App::bind('GSD\Repositories\RepositoryInterface', function()
+        App::bind( 'GSD\Repositories\RepositoryInterface', function ()
         {
-            $mock = Mockery::mock('GSD\Repositories\RepositoryInterface');
-            $mock->shouldReceive('exists')->once()->andReturn(true);
-            $mock->shouldReceive('delete')->once()->andReturn(false);
+            $mock = Mockery::mock( 'GSD\Repositories\RepositoryInterface' );
+            $mock->shouldReceive( 'exists' )->once()->andReturn( true );
+            $mock->shouldReceive( 'delete' )->once()->andReturn( false );
             return $mock;
-        });
-        $list = App::make('GSD\Entities\TodoList');
-        $list->set('id', 'actions');
+        } );
+        $list = App::make( 'GSD\Entities\TodoList' );
+        $list->set( 'id', 'actions' );
         $list->archive();
     }
 }

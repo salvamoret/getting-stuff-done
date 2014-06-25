@@ -14,10 +14,13 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"GSD\\": "app/src/GSD"
+			"GSD\\": "app/src/GSD/"
 		},
 		"classmap": [
 			"app/tests/TestCase.php"
+		],
+		"files": [
+			"app/src/GSD/helpers.php"
 		]
 	},
 	"scripts": {
