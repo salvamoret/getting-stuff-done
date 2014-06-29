@@ -19,13 +19,13 @@ class ListAllCommand extends Command {
 	 *
 	 * @var string
 	 */
-	protected $description = 'Lists all todo lists ( and possibly tasks ).';
+	protected $description = 'Lists all todo lists (and possibly tasks).';
 
-	/**
-	 * Create a new command instance.
-	 *
-	 * @return void
-	 */
+    /**
+     * Create a new command instance.
+     *
+     * @return \GSD\Commands\ListAllCommand
+     */
 	public function __construct()
 	{
 		parent::__construct();

@@ -3,6 +3,9 @@
 // File: app/src/GSD/Entities/TodoList.php
 
 use GSD\Repositories\RepositoryInterface;
+use InvalidArgumentException;
+use OutOfBoundsException;
+use RuntimeException;
 
 class TodoList implements ListInterface
 {

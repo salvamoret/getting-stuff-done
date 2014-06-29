@@ -3,7 +3,7 @@
 return array(
 
     'gsd' => array(
-        'folder'       => app_path() . '/../public/',
+        'folder'       => app_path() . '/../public/gsd/',
         'extension'    => '.txt',
         'listOrder'    => array(
             'inbox', 'actions', 'waiting', 'someday', 'calendar',

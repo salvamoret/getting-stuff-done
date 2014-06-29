@@ -1,5 +1,23 @@
 <?php
 use Illuminate\Console\Command;
+
+/**
+ * Return TRUE if every arg is null.
+ * @usage all_null( arg1, arg2, ... )
+ * @return boolean
+ */
+function all_null()
+{
+    foreach ( func_get_args() as $arg )
+    {
+        if ( ! is_null( $arg ) )
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 /**
  * Return TRUE if a value is between two other values
  *

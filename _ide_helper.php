@@ -11352,6 +11352,18 @@ namespace {
 		 }
 
 		/**
+		 * Check if a route with the given name exists.
+		 *
+		 * @param string  $name
+		 * @return bool
+		 * @static 
+		 */
+		 public static function has($name){
+			//Method inherited from \Illuminate\Routing\Router
+			return \Illuminate\Routing\Router::has($name);
+		 }
+
+		/**
 		 * Get the current route name.
 		 *
 		 * @return string|null
