@@ -1,6 +1,5 @@
 <?php namespace GSD\Commands;
 
-use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Todo;
@@ -22,16 +21,6 @@ class CreateCommand extends CommandBase {
 	protected $description = 'Create new list.';
 
 	/**
-	 * Create a new command instance.
-	 *
-	 * @return void
-	 */
-	public function __construct()
-	{
-		parent::__construct();
-	}
-
-	/**
 	 * Execute the console command.
 	 *
 	 * @return mixed
@@ -51,8 +40,8 @@ class CreateCommand extends CommandBase {
 				$this->outputErrorBox( '*aborted*' );
 				exit;
 			}
-			$title = $this->ask( "Enter list title (enter to skip)?" );
-			$subtitle = $this->ask( "Enter list subtitle (enter to skip)?" );
+			$title = $this->ask( 'Enter list title (enter to skip)?' );
+			$subtitle = $this->ask( 'Enter list subtitle (enter to skip)?' );
 		}
 
 		// Validate arguments

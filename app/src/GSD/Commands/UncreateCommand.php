@@ -1,10 +1,10 @@
 <?php namespace GSD\Commands;
 
-use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Todo;
 
-class UncreateCommand extends Command {
+class UncreateCommand extends CommandBase {
 
 	/**
 	 * The console command name.
@@ -18,17 +18,7 @@ class UncreateCommand extends Command {
 	 *
 	 * @var string
 	 */
-	protected $description = 'Command description.';
-
-    /**
-     * Create a new command instance.
-     *
-     * @return \GSD\Commands\UncreateCommand
-     */
-	public function __construct()
-	{
-		parent::__construct();
-	}
+	protected $description = 'Destroy an empty list.';
 
 	/**
 	 * Execute the console command.
@@ -37,7 +27,26 @@ class UncreateCommand extends Command {
 	 */
 	public function fire()
 	{
-		//
+		// Prompt user for list-id
+		if ( ! ( $name = $this->askForListId( true, true ) ))
+		{
+			$this->outputErrorBox( '*aborted*' );
+			exit;
+		}
+
+		// Validate list has no tasks
+		$list = Todo::get( $name );
+		if ( $list->taskCount() > 0 )
+		{
+			throw new \UnexpectedValueException( 'Cannot uncreate a list with tasks' );
+		}
+
+		// Delete list
+		if ( ! $this->repository->delete( $name ) )
+		{
+			throw new \RuntimeException( "Repository couldn't delete list '$name'" );
+		}
+		$this->info( "The list '$name' is now in the big bitbucket in the sky" );
 	}
 
 	/**
@@ -47,9 +56,7 @@ class UncreateCommand extends Command {
 	 */
 	protected function getArguments()
 	{
-		return array(
-			array('example', InputArgument::REQUIRED, 'An example argument.'),
-		);
+		return array();
 	}
 
 	/**
@@ -59,9 +66,7 @@ class UncreateCommand extends Command {
 	 */
 	protected function getOptions()
 	{
-		return array(
-			array('example', null, InputOption::VALUE_OPTIONAL, 'An example option.', null),
-		);
+		return array();
 	}
 
 }

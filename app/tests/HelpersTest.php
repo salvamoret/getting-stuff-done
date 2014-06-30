@@ -54,10 +54,16 @@ class HelpersTest extends TestCase
     // First time through loop user selects bad choice, causing a second loop
     public function testPickFromListWorksExample3()
     {
+        $formatter = Mockery::mock( 'stdClass' );
+        $formatter->shouldReceive( 'formatBlock' )->once()->andReturn( '' );
+        $helperset = Mockery::mock( 'stdClass' );
+        $helperset->shouldReceive( 'get' )->once()->andReturn( $formatter );
         $command = Mockery::mock( 'Illuminate\Console\Command' );
         $command->shouldReceive( 'info' )->times( 2 );
         $command->shouldReceive( 'line' )->times( 4 );
-        $command->shouldReceive( 'ask' )->times( 2 )->andReturn( 'x', 1 );
+        $command->shouldReceive( 'getHelperSet' )->once()->andReturn( $helperset );
+        $command->shouldReceive( 'ask' )
+                ->times( 2 )->andReturn( 'x', 1 );
         $choice = pick_from_list( $command, 'title', array( 'option' ) );
         $this->assertEquals( 1, $choice );
     }
@@ -78,7 +84,7 @@ class HelpersTest extends TestCase
         $command->shouldReceive( 'info' )->once();
         $command->shouldReceive( 'line' )->times( 3 );
         $command->shouldReceive( 'ask' )->once()->andReturn( 2 );
-        $choice = pick_from_list( $command, 'title', array( 'option' ), 0, "Abort" );
+        $choice = pick_from_list( $command, 'title', array( 'option' ), 0, 'Abort' );
         $this->assertEquals( -1, $choice );
     }
 

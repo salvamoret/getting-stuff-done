@@ -4,6 +4,7 @@ use App;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Todo;
 
 class CommandBase extends Command {
 
@@ -31,7 +32,19 @@ class CommandBase extends Command {
 	{
 		if ( $existing )
 		{
-			throw new \Exception( 'existing not done' );
+			$title = 'Choose which list to destroy:';
+			$abort = 'cancel - do not destroy a list';
+			$choices = Todo::allLists();
+			if ( count( $choices ) == 0 )
+			{
+				throw new \RuntimeException( 'No lists to choose from' );
+			}
+			$result = pick_from_list( $this, $title, $choices, 0, $abort );
+			if ( $result == -1 )
+			{
+				return null;
+			}
+			return $choices[$result - 1];
 		}
 
 		$prompt = 'Enter name of new list';
@@ -50,7 +63,7 @@ class CommandBase extends Command {
 				}
 				$this->outputErrorBox( 'You must enter something' );
 			}
-			else if ( $this->repository->exists( $result, $archived ) )
+			elseif ( $this->repository->exists( $result, $archived ) )
 			{
 				$this->outputErrorBox( "You already have a list named '$result'" );
 			}

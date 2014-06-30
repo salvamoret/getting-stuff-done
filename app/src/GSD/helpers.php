@@ -43,8 +43,10 @@ function between( $value, $min, $max, $inclusive = true )
  * @param  Command $command The command requesting input
  * @param  string  $title   The title of list
  * @param  array   $choices List of choices
- * @param  integer $default Default choice ( 1-array size )
+ * @param  integer $default Default choice ( between 1 - array size ), -1 to abort
  * @param  string  $abort   String to tag on end for aborting selection
+ * @return  integer -1 if abort selected, otherwise one greater than $choices index
+ *                     ( in other words, choosing $choices[0] returns 1 )
  * @throws InvalidArgumentException If argument is invalid
  */
 function pick_from_list( Command $command, $title, array $choices, $default = 0, $abort = null )
@@ -56,29 +58,37 @@ function pick_from_list( Command $command, $title, array $choices, $default = 0,
     $numChoices = count( $choices );
     if ( ! $numChoices )
     {
-        throw new \InvalidArgumentException( "Must have at least one choice" );
+        throw new \InvalidArgumentException( 'Must have at least one choice' );
     }
-    if ( $default > $numChoices || $default < 0 )
+    if ( $default == -1 && empty( $abort ) )
+    {
+        throw new \InvalidArgumentException( 'Cannot use default=-1 without $abort option' );
+    }
+    if ( ! between( $default, -1, $numChoices ) )
     {
         throw new \InvalidArgumentException( "Invalid value, default=$default" );
     }
-    $question = "Please select 1 to $numChoices";
+    $question = "Please enter a number between 1-$numChoices";
     if ( $default > 0 )
     {
-        $question .= " ( default is $default )";
+        $question .= " (default is $default)";
     }
     elseif ( $default < 0 )
     {
-        $question .= " ( enter to abort )";
+        $question .= " (enter to abort)";
+        $default = $numChoices;
     }
-    $question .= '?';
+    $question .= ':';
     while ( 1 )
     {
+        $command->line( '' );
         $command->info( $title );
+        $command->line( '' );
         for ( $i = 0; $i < $numChoices ; $i++ )
         {
-            $command->line( ( $i + 1 ) . ". " . $choices[$i] );
+            $command->line( ( $i + 1) . ". " . $choices[$i] );
         }
+        $command->line( '' );
         $answer = $command->ask( $question );
         if ( $answer == '' )
         {
@@ -92,5 +102,11 @@ function pick_from_list( Command $command, $title, array $choices, $default = 0,
             }
             return ( int )$answer;
         }
+
+        // Output wrong choice
+        $command->line( '' );
+        $formatter = $command->getHelperSet()->get( 'formatter' );
+        $block = $formatter->formatBlock( 'Invalid entry!', 'error', true );
+        $command->line( $block );
     }
 }
