@@ -5,7 +5,8 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Todo;
 
-class ListAllCommand extends Command {
+class ListAllCommand extends Command
+{
 
 	/**
 	 * The console command name.

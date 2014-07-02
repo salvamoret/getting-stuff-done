@@ -62,8 +62,7 @@ class HelpersTest extends TestCase
         $command->shouldReceive( 'info' )->times( 2 );
         $command->shouldReceive( 'line' )->times( 4 );
         $command->shouldReceive( 'getHelperSet' )->once()->andReturn( $helperset );
-        $command->shouldReceive( 'ask' )
-                ->times( 2 )->andReturn( 'x', 1 );
+        $command->shouldReceive( 'ask' )->times( 2 )->andReturn( 'x', 1 );
         $choice = pick_from_list( $command, 'title', array( 'option' ) );
         $this->assertEquals( 1, $choice );
     }

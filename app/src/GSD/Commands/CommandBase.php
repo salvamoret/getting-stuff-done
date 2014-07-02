@@ -6,7 +6,8 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Todo;
 
-class CommandBase extends Command {
+class CommandBase extends Command
+{
 
 	protected $repository;
 

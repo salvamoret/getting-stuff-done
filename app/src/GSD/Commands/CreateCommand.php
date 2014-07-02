@@ -4,7 +4,8 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Todo;
 
-class CreateCommand extends CommandBase {
+class CreateCommand extends CommandBase
+{
 
 	/**
 	 * The console command name.
