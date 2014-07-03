@@ -8,7 +8,6 @@ use Todo;
 
 class CommandBase extends Command
 {
-
 	protected $repository;
 
 	/**
