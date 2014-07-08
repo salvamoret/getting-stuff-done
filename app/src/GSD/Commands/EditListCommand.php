@@ -19,7 +19,40 @@ class EditListCommand extends CommandBase
 	public function fire()
 	{
 		$name = $this->getListId();
-		var_dump( $name );
+		if ( is_null( $name ) )
+		{
+			$this->outputErrorBox( 'EditList aborted' );
+			return;
+		}
+		$list = Todo::get( $name );
+
+		$title = $this->option( 'title' );
+		$subtitle = $this->option( 'subtitle' );
+
+		if ( all_null( $title, $subtitle ) )
+		{
+			$this->info( sprintf( "Editing '%s'", $name ) );
+			$this->line( '' );
+			$title = $this->ask( 'Enter list title (enter to skip)?' );
+			$subtitle = $this->ask( 'Enter list subtitle (enter to skip)?' );
+			$this->line( '' );
+			if ( all_null( $title, $subtitle ) )
+			{
+				$this->comment( 'Nothing changed. List not updated.' );
+				return;
+			}
+		}
+
+		if ( $title )
+		{
+			$list->set( 'title', $title );
+		}
+		if ( $subtitle )
+		{
+			$list->set( 'subtitle', $subtitle );
+		}
+		$list->save();
+		$this->info( sprintf( "List '%s' updated", $name ) );
 	}
 
 	/**
