@@ -85,7 +85,7 @@ class CreateCommand extends CommandBase
 	{
 		return array(
 			array( '+name', InputArgument::OPTIONAL, 'List name to create.' ),
-		 );
+		);
 	}
 
 	/**
@@ -98,7 +98,7 @@ class CreateCommand extends CommandBase
 		return array(
 			array( 'title', 't', InputOption::VALUE_REQUIRED, 'Title of list.', null ),
 			array( 'subtitle', 's', InputOption::VALUE_REQUIRED, 'Subtitle of list.', null ),
-		 );
+		);
 	}
 
 }

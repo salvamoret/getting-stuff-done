@@ -29,7 +29,7 @@ class UncreateCommand extends CommandBase
 	public function fire()
 	{
 		// Prompt user for list-id
-		if ( ! ( $name = $this->askForListId( true, true ) ))
+		if ( ! ( $name = $this->askForListId( true, true ) ) )
 		{
 			$this->outputErrorBox( '*aborted*' );
 			exit;

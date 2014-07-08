@@ -51,7 +51,7 @@ class ListAllCommand extends Command
 				$list->taskCount( 'next' ),
 				$list->taskCount( 'todo' ),
 				$list->taskCount( 'done' ),
-			 );
+			);
 		}
 
 		// Output a pretty table
@@ -110,7 +110,7 @@ class ListAllCommand extends Command
 	{
 		return array(
 			// array( 'example', InputArgument::REQUIRED, 'An example argument.' ),
-		 );
+		);
 	}
 
 	/**
@@ -122,7 +122,7 @@ class ListAllCommand extends Command
 	{
 		return array(
 			array( 'archived', 'a', InputOption::VALUE_NONE, 'use archived lists?' ),
-		 );
+		);
 	}
 
 }
